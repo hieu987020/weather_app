@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/app/modules/home/controllers/home_controller.dart';
+import '../controllers/home_controller.dart';
 
+// Management View
 class ManagementView extends GetView<HomeController> {
   const ManagementView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var searchController = TextEditingController();
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -25,6 +27,8 @@ class ManagementView extends GetView<HomeController> {
           child: Column(
             children: [
               const SizedBox(height: 30),
+
+              // back icon button and search icon button
               Row(
                 children: [
                   IconButton(
@@ -43,6 +47,7 @@ class ManagementView extends GetView<HomeController> {
                       child: SizedBox(
                         height: 50,
                         child: TextField(
+                          controller: searchController,
                           onTapOutside: (event) =>
                               FocusManager.instance.primaryFocus?.unfocus(),
                           decoration: InputDecoration(
@@ -51,7 +56,19 @@ class ManagementView extends GetView<HomeController> {
                               color: Colors.white.withOpacity(0.6),
                             ),
                             prefixIconColor: Colors.white.withOpacity(0.6),
-                            prefixIcon: const Icon(Icons.search),
+                            prefixIcon: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                controller.searchWeather(searchController.text);
+                              },
+                            ),
+                            suffixIconColor: Colors.white.withOpacity(0.6),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                searchController.clear();
+                              },
+                            ),
                             filled: true,
                             fillColor: Colors.white.withOpacity(0.2),
                             border: OutlineInputBorder(
@@ -63,7 +80,6 @@ class ManagementView extends GetView<HomeController> {
                           ),
                           onSubmitted: (value) {
                             controller.searchWeather(value);
-                            Get.back();
                           },
                         ),
                       ),
@@ -72,6 +88,7 @@ class ManagementView extends GetView<HomeController> {
                 ],
               ),
               const SizedBox(height: 20),
+              // suggested cities
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -104,6 +121,7 @@ class ManagementView extends GetView<HomeController> {
     );
   }
 
+  // generate list suggested cities widget
   List<Widget> listView() {
     var list = <Widget>[];
     var suggestion = [
@@ -168,7 +186,6 @@ class ManagementView extends GetView<HomeController> {
       'Nevada',
       'New Hampshire'
     ];
-
     for (var element in suggestion) {
       list.add(SuggestedCities(city: element));
     }
@@ -176,6 +193,7 @@ class ManagementView extends GetView<HomeController> {
   }
 }
 
+// Suggested Cities Widget
 class SuggestedCities extends GetView<HomeController> {
   const SuggestedCities({required this.city});
   final String city;

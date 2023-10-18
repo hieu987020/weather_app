@@ -1,5 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/utils/convert_data.dart';
@@ -15,10 +15,6 @@ class HomeView extends GetView<HomeController> {
       body: Container(
         height: 1000,
         decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/images/rain.jpg"),
-          //   fit: BoxFit.cover,
-          // ),
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -45,7 +41,7 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-/// Today Weather Widget
+/// Main Weather Widget
 class MainWeather extends GetView<HomeController> {
   const MainWeather({super.key});
 
@@ -209,7 +205,7 @@ class DailyWeather extends GetView<HomeController> {
     return Obx(
       () => Container(
         width: 400,
-        height: 150,
+        height: 170,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10),
@@ -230,7 +226,7 @@ class DailyWeather extends GetView<HomeController> {
                         Text(
                           controller.forecastday[index].date!,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
@@ -251,28 +247,54 @@ class DailyWeather extends GetView<HomeController> {
                         Text(
                           "${controller.forecastday[index].day!.condition!.text}",
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         // max temperature in celsius text
                         Text(
-                          "Max: ${convertTempCToString(controller.forecastday[index].day!.maxtempC!)}",
+                          "Max ${convertTempCToString(controller.forecastday[index].day!.maxtempC!)}",
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         // min temperature in celsius text
                         Text(
-                          "Min: ${convertTempCToString(controller.forecastday[index].day!.mintempC!)}",
+                          "Min ${convertTempCToString(controller.forecastday[index].day!.mintempC!)}",
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
+                        // const SizedBox(height: 10),
+                        // Text(
+                        //   "Wind ${controller.forecastday[index].day!.maxwindKph} km/h",
+                        //   style: const TextStyle(
+                        //     fontSize: 14,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 10),
+                        // // sunrise time
+                        // Text(
+                        //   "Sunrise: ${controller.forecastday[index].astro!.sunrise!}",
+                        //   style: const TextStyle(
+                        //     fontSize: 14,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 10),
+                        // // sunset time
+                        // Text(
+                        //   "Sunset: ${controller.forecastday[index].astro!.sunset!}",
+                        //   style: const TextStyle(
+                        //     fontSize: 14,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
                       ],
                     ),
                   );
@@ -281,4 +303,16 @@ class DailyWeather extends GetView<HomeController> {
       ),
     );
   }
+}
+
+void showToast() {
+  Fluttertoast.showToast(
+    msg: "No matching location found",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
 }

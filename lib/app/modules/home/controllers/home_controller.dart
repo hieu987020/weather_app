@@ -1,14 +1,13 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:get/get.dart';
-import 'package:weather_app/app/data/models/forecastday_model.dart';
 import '../../../data/enums/service_enum.dart';
-import '../../../data/models/current_model.dart';
-import '../../../data/models/hour_model.dart';
-import '../../../data/models/location_model.dart';
+import '../../../data/models/models.dart';
 import '../../../data/services/weather/weather_service_interface.dart';
+import '../views/home_view.dart';
 
 class HomeController extends GetxController {
+  // declare service
   late final IWeatherService service;
 
   // status of homeview
@@ -20,10 +19,12 @@ class HomeController extends GetxController {
   var hour = <Hour>[].obs;
   var forecastday = <Forecastday>[].obs;
   var tempCInt = 10.obs;
+
   // get service then fetch Weather of "Ho Chi Minh"
   @override
   void onInit() {
     service = Get.find<IWeatherService>(tag: ServiceEnum.WEATHER);
+    // get weather for default city (Ho Chi Minh)
     getWeather("Ho Chi Minh");
     super.onInit();
   }
@@ -40,9 +41,11 @@ class HomeController extends GetxController {
 
   // get weather
   Future<void> getWeather(String city) async {
+    // show loading progress indicator
     isLoading(true);
     service.getWeather(city, 7).then(
       (value) {
+        // get weather data from service and update to obs variable
         if (value.location != null) {
           location(value.location);
         }
@@ -55,14 +58,21 @@ class HomeController extends GetxController {
           forecastday(value.forecast!.forecastday!);
           hour(value.forecast!.forecastday!.first.hour!);
         }
+        // back to home
+        Get.back();
+        // hide loading progress indicator
         isLoading(false);
       },
-    );
+    ).onError((error, stackTrace) {
+      // back to home
+      // hide loading progress indicator
+      showToast();
+      isLoading(false);
+    });
   }
 
   // search weather
   void searchWeather(String city) {
     getWeather(city);
   }
-
 }

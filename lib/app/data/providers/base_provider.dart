@@ -11,7 +11,8 @@ class BaseProvider {
     // get api url , shared key from environment file
     apiUrl = url;
     apiKey = key;
-    dio.interceptors.clear();
+
+    // dio.interceptors.clear();
 
     // show log for each api
     dio.interceptors.add(
@@ -23,7 +24,9 @@ class BaseProvider {
     // log error and handle error
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) => handler.next(options),
+        onRequest: (options, handler) {
+          handler.next(options);
+        },
         onResponse: (response, handler) {
           handler.next(response);
         },
@@ -32,6 +35,7 @@ class BaseProvider {
             log("Dio Error:");
             log(error.response.toString());
             log(error.error.toString());
+            log(error.message ?? "");
             handler.reject(error);
           } catch (_) {
             log(_.toString());

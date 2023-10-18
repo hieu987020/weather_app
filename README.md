@@ -23,10 +23,19 @@ flutter run
 6. Terminal will show like this
 ```
 Connected devices:
-macOS (desktop) • macos  • darwin-arm64   • macOS 14.0 23A344 darwin-arm64
-Chrome (web)    • chrome • web-javascript • Google Chrome 117.0.5938.149
+STK L22 (mobile)            • YDVNW19C16006204 • android-arm64  • Android 10 (API 29)
+sdk gphone64 arm64 (mobile) • emulator-5554    • android-arm64  • Android 14 (API 34) (emulator)
+macOS (desktop)             • macos            • darwin-arm64   • macOS 14.0 23A344 darwin-arm64
+Chrome (web)                • chrome           • web-javascript • Google Chrome 117.0.5938.149
+
+No wireless devices were found.
+
+[1]: STK L22 (YDVNW19C16006204)
+[2]: sdk gphone64 arm64 (emulator-5554)
+[3]: macOS (macos)
+[4]: Chrome (chrome)
 ```
-Choose Connected devices, choose Chrome
+Choose Connected devices then test app
  ```
  2
  ```

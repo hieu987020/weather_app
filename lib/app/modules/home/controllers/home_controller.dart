@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_overrides
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/enums/service_enum.dart';
 import '../../../data/models/models.dart';
@@ -20,6 +21,8 @@ class HomeController extends GetxController {
   var forecastday = <Forecastday>[].obs;
   var tempCInt = 10.obs;
 
+  // search controller
+  var searchController = TextEditingController();
   // get service then fetch Weather of "Ho Chi Minh"
   @override
   void onInit() {

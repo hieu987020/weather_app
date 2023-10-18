@@ -62,7 +62,7 @@ class MainWeather extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       PopupMenuButton<String>(
-                        color: Colors.blue.withOpacity(0.8),
+                        color: Colors.blue,
                         icon: Image.asset(
                           "assets/images/menu8.png",
                           color: Colors.white,
@@ -305,13 +305,14 @@ class DailyWeather extends GetView<HomeController> {
   }
 }
 
+/// Show Invalid Location Toast
 void showToast() {
   Fluttertoast.showToast(
     msg: "No matching location found",
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 1,
-    backgroundColor: Colors.red,
+    timeInSecForIosWeb: 2,
+    backgroundColor: Colors.black,
     textColor: Colors.white,
     fontSize: 16.0,
   );

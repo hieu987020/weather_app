@@ -1,6 +1,7 @@
 # weather_app
 
-A new Weather project.
+This is a Weather App using Flutter Framework with User-Friendly UI
+User can see Weather or Forecast information when entering location
 
 # Install
 1. Open terminal at folder you want to clone project
@@ -40,5 +41,7 @@ Choose Connected devices then test app
  2
  ```
 
-# Setup to run app (image)
+# User manual (image)
+https://github.com/hieu987020/weather_app
+1. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step1.jpg?raw=true" width="200">]()
 

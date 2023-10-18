@@ -9,7 +9,6 @@ class ManagementView extends GetView<HomeController> {
   const ManagementView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var searchController = TextEditingController();
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -27,10 +26,10 @@ class ManagementView extends GetView<HomeController> {
           child: Column(
             children: [
               const SizedBox(height: 30),
-
-              // back icon button and search icon button
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  //back icon button
                   IconButton(
                     icon: const Icon(
                       Icons.arrow_back,
@@ -40,14 +39,15 @@ class ManagementView extends GetView<HomeController> {
                       Navigator.pop(context);
                     },
                   ),
+                  // search icon button
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.only(
                           top: 10, bottom: 10, left: 12, right: 12),
                       child: SizedBox(
-                        height: 50,
+                        height: 60,
                         child: TextField(
-                          controller: searchController,
+                          controller: controller.searchController,
                           onTapOutside: (event) =>
                               FocusManager.instance.primaryFocus?.unfocus(),
                           decoration: InputDecoration(
@@ -59,14 +59,15 @@ class ManagementView extends GetView<HomeController> {
                             prefixIcon: IconButton(
                               icon: const Icon(Icons.search),
                               onPressed: () {
-                                controller.searchWeather(searchController.text);
+                                controller.searchWeather(
+                                    controller.searchController.text);
                               },
                             ),
                             suffixIconColor: Colors.white.withOpacity(0.6),
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.close),
                               onPressed: () {
-                                searchController.clear();
+                                controller.searchController.clear();
                               },
                             ),
                             filled: true,

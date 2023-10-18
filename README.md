@@ -42,23 +42,28 @@ Choose Connected devices then test app
  ```
 
 ### User manual
-1. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step1.jpg?raw=true" width="200">]()
+1. Step 1
 - This is the Home Screen where we can see full weather forecast of chosen location
 - Bookmark 1 is menu icon button
 - Bookmark 2 is basic weather forecast
 - Bookmark 3 is hourly forecast
 - Bookmark 4 is daily forecast
-2. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step2.jpg?raw=true" width="200">]()
+- [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step1.png?raw=true" width="200">]()
+2. Step 2
 - Press on menu icon and choose "Manage cities" to select location
-3. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step3.jpg?raw=true" width="200">]()
+- [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step2.png?raw=true" width="200">]()
+3. Step 3
 - Bookmark 1 is search icon button, on press to search location
 - Bookmark 2 is where user can enter text, on press to enter location input
 - Bookmark 3 is delete icon button, on press to delete location input
 - Bookmark 4 is suggested location box, on press to choose suggested location
-4. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step4.jpg?raw=true" width="200">]()
+- [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step3.png?raw=true" width="200">]()
+4. Step 4
 - Entering location by keyboard
-5. [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step5.jpg?raw=true" width="200">]()
-- The weather forecast will be show in Home Screen 
+- [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step4.png?raw=true" width="200">]()
+5. Step 5
+- The weather forecast will be show in Home Screen
+- [<img src="https://github.com/hieu987020/weather_app/blob/master/user_manual/step5.png?raw=true" width="200">]()
 
 ### Development
 ```

@@ -2,7 +2,7 @@
 
 A new Weather project.
 
-# Setup to run app (terminal)
+# Install
 1. Open terminal at folder you want to clone project
 2. Clone project
 ```

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 class BaseProvider {
@@ -9,6 +11,8 @@ class BaseProvider {
     // get api url , shared key from environment file
     apiUrl = url;
     apiKey = key;
+    dio.interceptors.clear();
+
     // show log for each api
     dio.interceptors.add(
       LogInterceptor(
@@ -16,6 +20,25 @@ class BaseProvider {
         responseBody: true,
       ),
     );
-    
+    // log error and handle error
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) => handler.next(options),
+        onResponse: (response, handler) {
+          handler.next(response);
+        },
+        onError: (error, handler) async {
+          try {
+            log("Dio Error:");
+            log(error.response.toString());
+            log(error.error.toString());
+            handler.reject(error);
+          } catch (_) {
+            log(_.toString());
+            handler.reject(error);
+          }
+        },
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:get/get.dart';
+import 'package:weather_app/app/data/models/forecastday_model.dart';
 import '../../../data/enums/service_enum.dart';
 import '../../../data/models/hour_model.dart';
 import '../../../data/services/weather/weather_service_interface.dart';
@@ -10,8 +11,11 @@ class HomeController extends GetxController {
   var name = "default name".obs;
   var tempc = "10".obs;
   var condition = "default condition".obs;
+
+  // status of homeview
   var isLoading = false.obs;
   var hour = <Hour>[].obs;
+  var forecastday = <Forecastday>[].obs;
 
   /// get service then fetch Weather of "Ho Chi Minh"
   ///
@@ -34,25 +38,30 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  // get weather 
+  // get weather
   Future<void> getWeather(String city) async {
     isLoading(true);
-    service.getWeather(city, 1).then(
+    service.getWeather(city, 7).then(
       (value) {
+        print("tao  toi day");
         if (value.location != null) {
           name(value.location!.name);
         }
         if (value.current != null) {
           if (value.current!.feelslikeC != null) {
             var tempC = value.current!.tempC!.toInt();
-            var tempcString = "$tempC" "°";
+            var tempcString = "$tempC";
             tempc(tempcString);
           }
           condition(value.current!.condition!.text);
         }
+        if (value.forecast != null) {
+          forecastday.value = value.forecast!.forecastday!;
+          hour.value = value.forecast!.forecastday!.first.hour!;
+        }
+        isLoading(false);
       },
     );
-    isLoading(false);
   }
 
   // search weather

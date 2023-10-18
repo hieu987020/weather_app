@@ -17,6 +17,7 @@ dependencies:
   get_it: ^7.6.4
   flutter_dotenv: ^5.1.0
   intl: ^0.18.1
+  cached_network_image: ^3.3.0
 
 dev_dependencies: 
   build_runner: ^2.4.6

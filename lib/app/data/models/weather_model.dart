@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
-
 import 'current_model.dart';
 import 'forecast_model.dart';
 import 'location_model.dart';
 
 part 'weather_model.g.dart';
 
-@RestApi(baseUrl: 'http://api.weatherapi.com/v1')
+@RestApi()
 abstract class WeatherObjectRestClient {
   factory WeatherObjectRestClient(Dio dio, {String baseUrl}) =
       _WeatherObjectRestClient;
@@ -27,7 +26,11 @@ class Weather {
   Current? current;
   Forecast? forecast;
 
-  Weather({this.location, this.current, this.forecast});
+  Weather({
+    this.location,
+    this.current,
+    this.forecast,
+  });
 
   factory Weather.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);

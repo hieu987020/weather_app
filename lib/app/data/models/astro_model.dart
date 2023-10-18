@@ -1,6 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'astro_model.g.dart';
-@JsonSerializable()
+
 class Astro {
   String? sunrise;
   String? sunset;
@@ -20,8 +18,28 @@ class Astro {
       this.moonIllumination,
       this.isMoonUp,
       this.isSunUp});
-factory Astro.fromJson(Map<String, dynamic> json) =>
-      _$AstroFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AstroToJson(this);
+  Astro.fromJson(Map<String, dynamic> json) {
+    sunrise = json['sunrise'];
+    sunset = json['sunset'];
+    moonrise = json['moonrise'];
+    moonset = json['moonset'];
+    moonPhase = json['moon_phase'];
+    moonIllumination = json['moon_illumination'];
+    isMoonUp = json['is_moon_up'];
+    isSunUp = json['is_sun_up'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['sunrise'] = sunrise;
+    data['sunset'] = sunset;
+    data['moonrise'] = moonrise;
+    data['moonset'] = moonset;
+    data['moon_phase'] = moonPhase;
+    data['moon_illumination'] = moonIllumination;
+    data['is_moon_up'] = isMoonUp;
+    data['is_sun_up'] = isSunUp;
+    return data;
+  }
 }

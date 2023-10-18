@@ -9,7 +9,6 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -34,7 +33,6 @@ class HomeView extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         PopupMenuButton<String>(
-                          onSelected: (String choice) {},
                           itemBuilder: (BuildContext context) {
                             return <PopupMenuEntry<String>>[
                               PopupMenuItem<String>(
@@ -43,14 +41,6 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () {
                                   Get.to(() => const ManagementView());
                                 },
-                              ),
-                              const PopupMenuItem<String>(
-                                value: 'Option 2',
-                                child: Text('Option 2'),
-                              ),
-                              const PopupMenuItem<String>(
-                                value: 'Option 3',
-                                child: Text('Option 3'),
                               ),
                             ];
                           },
@@ -67,17 +57,27 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      controller.tempc.value,
-                      style: const TextStyle(
-                        fontSize: 86,
-                        color: Colors.white,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25),
+                          child: Text(
+                            controller.tempc.value,
+                            style: const TextStyle(
+                              fontSize: 96,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Text(
                       controller.condition.value,
                       style: const TextStyle(
                         color: Colors.white,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -87,3 +87,53 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
+
+// class ForecastView extends GetView<HomeController> {
+//   const ForecastView({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 360,
+//       height: 150,
+//       padding: const EdgeInsets.all(10),
+//       margin: const EdgeInsets.all(10),
+//       color: Colors.blueGrey,
+//       child: ListView.builder(
+//         scrollDirection: Axis.horizontal,
+//         shrinkWrap: true,
+//         itemCount: controller.hour.length,
+//         itemBuilder: (BuildContext context, int index) {
+//           print(controller.hour[index].condition!.icon!);
+//           return SizedBox(
+//             width: 50,
+//             height: 50,
+//             child: Column(
+//               children: [
+//                 Text(
+//                   controller.hour[index].time!.substring(11, 16),
+//                   style: const TextStyle(
+//                     fontSize: 20,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//                 Image.network(
+//                   controller.hour[index].condition!.icon!,
+//                   fit: BoxFit.contain,
+//                   height: 50,
+//                 ),
+//                 Text(
+//                   "${controller.hour[index].tempC}" "°",
+//                   style: const TextStyle(
+//                     fontSize: 20,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

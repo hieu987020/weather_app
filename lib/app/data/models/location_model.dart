@@ -1,8 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
 
-part 'location_model.g.dart';
-
-@JsonSerializable()
 class Location {
   String? name;
   String? region;
@@ -22,8 +18,29 @@ class Location {
       this.tzId,
       this.localtimeEpoch,
       this.localtime});
-factory Location.fromJson(Map<String, dynamic> json) =>
-      _$LocationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LocationToJson(this);
+  Location.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    region = json['region'];
+    country = json['country'];
+    lat = json['lat'];
+    lon = json['lon'];
+    tzId = json['tz_id'];
+    localtimeEpoch = json['localtime_epoch'];
+    localtime = json['localtime'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['region'] = region;
+    data['country'] = country;
+    data['lat'] = lat;
+    data['lon'] = lon;
+    data['tz_id'] = tzId;
+    data['localtime_epoch'] = localtimeEpoch;
+    data['localtime'] = localtime;
+    return data;
+  }
 }
+

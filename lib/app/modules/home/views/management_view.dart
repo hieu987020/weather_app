@@ -13,39 +13,31 @@ class ManagementView extends GetView<HomeController> {
         title: const Text("Manage cities"),
         backgroundColor: Colors.black,
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus(); // Dismiss the keyboard
-          }
-        },
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 12, right: 12),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 12, right: 12),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                onChanged: (value) {
-                  // controller.searchWeather(value);
-                },
-                onSubmitted: (value) {
-                  controller.searchWeather(value);
-                  Get.back();
-                },
               ),
+              onChanged: (value) {
+                // controller.searchWeather(value);
+              },
+              onSubmitted: (value) {
+                controller.searchWeather(value);
+                Get.back();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,14 +1,22 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'condition_model.g.dart';
-@JsonSerializable()
+
 class Condition {
   String? text;
   String? icon;
   int? code;
 
   Condition({this.text, this.icon, this.code});
-factory Condition.fromJson(Map<String, dynamic> json) =>
-      _$ConditionFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ConditionToJson(this);
+  Condition.fromJson(Map<String, dynamic> json) {
+    text = json['text'];
+    icon = json['icon'];
+    code = json['code'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['text'] = text;
+    data['icon'] = icon;
+    data['code'] = code;
+    return data;
+  }
 }

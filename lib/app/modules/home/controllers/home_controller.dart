@@ -3,24 +3,24 @@
 import 'package:get/get.dart';
 import 'package:weather_app/app/data/models/forecastday_model.dart';
 import '../../../data/enums/service_enum.dart';
+import '../../../data/models/current_model.dart';
 import '../../../data/models/hour_model.dart';
+import '../../../data/models/location_model.dart';
 import '../../../data/services/weather/weather_service_interface.dart';
 
 class HomeController extends GetxController {
   late final IWeatherService service;
-  var name = "default name".obs;
-  var tempc = "10".obs;
-  var condition = "default condition".obs;
 
   // status of homeview
   var isLoading = false.obs;
+
+  // data of weather
+  var current = Current().obs;
+  var location = Location().obs;
   var hour = <Hour>[].obs;
   var forecastday = <Forecastday>[].obs;
-
-  /// get service then fetch Weather of "Ho Chi Minh"
-  ///
-  ///
-  ///
+  var tempCInt = 10.obs;
+  // get service then fetch Weather of "Ho Chi Minh"
   @override
   void onInit() {
     service = Get.find<IWeatherService>(tag: ServiceEnum.WEATHER);
@@ -43,21 +43,17 @@ class HomeController extends GetxController {
     isLoading(true);
     service.getWeather(city, 7).then(
       (value) {
-        print("tao  toi day");
         if (value.location != null) {
-          name(value.location!.name);
+          location(value.location);
         }
         if (value.current != null) {
-          if (value.current!.feelslikeC != null) {
-            var tempC = value.current!.tempC!.toInt();
-            var tempcString = "$tempC";
-            tempc(tempcString);
-          }
-          condition(value.current!.condition!.text);
+          current(value.current);
+          var tempC = value.current!.tempC!.toInt();
+          tempCInt(tempC);
         }
         if (value.forecast != null) {
-          forecastday.value = value.forecast!.forecastday!;
-          hour.value = value.forecast!.forecastday!.first.hour!;
+          forecastday(value.forecast!.forecastday!);
+          hour(value.forecast!.forecastday!.first.hour!);
         }
         isLoading(false);
       },
@@ -68,4 +64,5 @@ class HomeController extends GetxController {
   void searchWeather(String city) {
     getWeather(city);
   }
+
 }

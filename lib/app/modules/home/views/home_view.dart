@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/utils/convert_data.dart';
 import '../controllers/home_controller.dart';
 import 'management_view.dart';
 
@@ -60,50 +61,56 @@ class MainWeather extends GetView<HomeController> {
             : Column(
                 children: [
                   const SizedBox(height: 20),
+                  // menu
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Theme(
-                        data: ThemeData(useMaterial3: true),
-                        child: PopupMenuButton<String>(
+                      PopupMenuButton<String>(
+                        color: Colors.blue.withOpacity(0.8),
+                        icon: Image.asset(
+                          "assets/images/menu8.png",
                           color: Colors.white,
-                          icon: Image.asset(
-                            "assets/images/menu8.png",
-                            color: Colors.white,
-                            height: 25,
-                          ),
-                          offset: Offset(0, 50),
-                          itemBuilder: (BuildContext context) {
-                            return <PopupMenuEntry<String>>[
-                              PopupMenuItem<String>(
-                                value: 'Option 1',
-                                child: const Text('Manage cities'),
-                                onTap: () {
-                                  Get.to(() => const ManagementView());
-                                },
-                              ),
-                            ];
-                          },
+                          height: 25,
                         ),
+                        offset: Offset(0, 50),
+                        itemBuilder: (BuildContext context) {
+                          return <PopupMenuEntry<String>>[
+                            PopupMenuItem<String>(
+                              value: 'Option 1',
+                              child: const Text(
+                                'Manage cities',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onTap: () {
+                                Get.to(() => const ManagementView());
+                              },
+                            ),
+                          ];
+                        },
                       ),
                     ],
                   ),
                   const SizedBox(height: 50),
+
+                  // city name text
                   Text(
-                    controller.name.value,
+                    controller.location.value.name!,
                     style: const TextStyle(
                       fontSize: 28,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 10),
+                  // temperature in celsius text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 25),
                         child: Text(
-                          "${controller.tempc.value}°C",
+                          convertTempCToString(controller.current.value.tempC!),
                           style: const TextStyle(
                             fontSize: 96,
                             fontWeight: FontWeight.w300,
@@ -113,8 +120,9 @@ class MainWeather extends GetView<HomeController> {
                       ),
                     ],
                   ),
+                  // weather condition text
                   Text(
-                    controller.condition.value,
+                    controller.current.value.condition!.text!,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
@@ -153,17 +161,19 @@ class HourlyWeather extends GetView<HomeController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        // hour
                         Text(
                           controller.hour[index].time!.substring(11, 16),
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 15),
+                        // weather icon image
                         Image.network(
                           height: 35,
-                          controller.hour[index].condition!.icon!,
+                          "https:${controller.hour[index].condition!.icon!}",
                           errorBuilder: (context, exception, stackTrace) {
                             return Image.asset(
                               'assets/images/weather.png',
@@ -171,11 +181,12 @@ class HourlyWeather extends GetView<HomeController> {
                             );
                           },
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 2),
+                        // current temperature in celsius text
                         Text(
-                          "${controller.hour[index].tempC!}" "°",
+                          convertTempCToString(controller.hour[index].tempC!),
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Colors.white,
                           ),
                         ),
@@ -215,6 +226,7 @@ class DailyWeather extends GetView<HomeController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        // date
                         Text(
                           controller.forecastday[index].date!,
                           style: const TextStyle(
@@ -223,9 +235,10 @@ class DailyWeather extends GetView<HomeController> {
                           ),
                         ),
                         const SizedBox(height: 5),
+                        // weather icon image
                         Image.network(
                           height: 35,
-                          controller.forecastday[index].day!.condition!.icon!,
+                          "https:${controller.forecastday[index].day!.condition!.icon!}",
                           errorBuilder: (context, exception, stackTrace) {
                             return Image.asset(
                               'assets/images/weather.png',
@@ -234,6 +247,7 @@ class DailyWeather extends GetView<HomeController> {
                           },
                         ),
                         const SizedBox(height: 5),
+                        // weather condition text
                         Text(
                           "${controller.forecastday[index].day!.condition!.text}",
                           style: const TextStyle(
@@ -242,16 +256,18 @@ class DailyWeather extends GetView<HomeController> {
                           ),
                         ),
                         const SizedBox(height: 10),
+                        // max temperature in celsius text
                         Text(
-                          "${controller.forecastday[index].day!.maxtempC}" "°C",
+                          "Max: ${convertTempCToString(controller.forecastday[index].day!.maxtempC!)}",
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 10),
+                        // min temperature in celsius text
                         Text(
-                          "${controller.forecastday[index].day!.mintempC}" "°C",
+                          "Min: ${convertTempCToString(controller.forecastday[index].day!.mintempC!)}",
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.white,

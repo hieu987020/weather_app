@@ -14,4 +14,14 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-# weather_app
+# Setup to run app (terminal)
+1. Open terminal at folder you want to clone project
+2. git clone https://github.com/hieu987020/weather_app
+3. cd weather_app
+4. flutter pub get
+5. flutter run 
+6. Choose Connected devices, choose Chrome
+    2
+
+# Setup to run app (image)
+

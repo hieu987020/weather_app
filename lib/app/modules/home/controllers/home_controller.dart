@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_overrides
 
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../../../data/enums/service_enum.dart';
 import '../../../data/models/hour_model.dart';
 import '../../../data/services/weather/weather_service_interface.dart';
@@ -14,6 +13,8 @@ class HomeController extends GetxController {
   var isLoading = false.obs;
   var hour = <Hour>[].obs;
 
+  /// get service then fetch Weather of "Ho Chi Minh"
+  ///
   @override
   void onInit() {
     service = Get.find<IWeatherService>(tag: ServiceEnum.WEATHER);
@@ -31,7 +32,8 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void getWeather(String city) {
+  //
+  Future<void> getWeather(String city) async {
     isLoading(true);
     service.getWeather(city, 1).then(
       (value) {
@@ -46,31 +48,12 @@ class HomeController extends GetxController {
           }
           condition(value.current!.condition!.text);
         }
-
-        if (value.forecast != null) {
-          if (value.forecast!.forecastday != null) {
-            hour(value.forecast!.forecastday!.first.hour);
-          }
-        }
-
-        if (value.forecast == null) {
-          print("nullllll");
-        }
-        hour(value.forecast!.forecastday!.first.hour);
-        // print(value.forecast!.forecastday!.length.toString());
-        // print(value.forecast!.forecastday!.first.date);
-
-        // print(value.forecast!.forecastday!.first.hour!.first.time);
-        // print(value.forecast!.forecastday!.first.hour!.first.condition!.text);
-        // print(value.forecast!.forecastday!.first.hour!.first.condition!.icon);
       },
     );
     isLoading(false);
   }
 
-  Future<void> searchWeather(String city) async {
-    isLoading(true);
+  void searchWeather(String city) {
     getWeather(city);
-    isLoading(false);
   }
 }

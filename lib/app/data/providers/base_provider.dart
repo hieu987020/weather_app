@@ -6,34 +6,16 @@ class BaseProvider {
   static String? apiKey;
 
   init({String? url, String? key}) {
-    // Get URL, API_KEY from environment file
+    // get api url , shared key from environment file
     apiUrl = url;
     apiKey = key;
-    // dio.interceptors.clear();
+    // show log for each api
     dio.interceptors.add(
       LogInterceptor(
         requestBody: true,
         responseBody: true,
       ),
     );
-    // dio.interceptors.add(
-    //   InterceptorsWrapper(
-    //     onRequest: (options, handler) => handler.next(options),
-    //     onResponse: (response, handler) {
-    //       handler.next(response);
-    //     },
-    //     onError: (error, handler) async {
-    //       try {
-    //         log("Dio Error:");
-    //         log(error.response.toString());
-    //         log(error.error.toString());
-    //         handler.reject(error);
-    //       } catch (_) {
-    //         log(_.toString());
-    //         handler.reject(error);
-    //       }
-    //     },
-    //   ),
-    // );
+    
   }
 }

@@ -4,10 +4,21 @@ A new Weather project.
 
 # Setup to run app (terminal)
 1. Open terminal at folder you want to clone project
-2. ```git clone https://github.com/hieu987020/weather_app```
-3. ```cd weather_app```
-4. ```flutter pub get```
-5. ```flutter run ```
+2. 
+```
+git clone https://github.com/hieu987020/weather_app
+```
+3. 
+```
+cd weather_app
+```
+4. ```
+flutter pub get
+```
+5. 
+```
+flutter run
+```
 6. Terminal will show 
 ```
 Connected devices:

@@ -15,6 +15,8 @@ class HomeController extends GetxController {
 
   /// get service then fetch Weather of "Ho Chi Minh"
   ///
+  ///
+  ///
   @override
   void onInit() {
     service = Get.find<IWeatherService>(tag: ServiceEnum.WEATHER);
@@ -32,7 +34,7 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  //
+  // get weather 
   Future<void> getWeather(String city) async {
     isLoading(true);
     service.getWeather(city, 1).then(
@@ -53,6 +55,7 @@ class HomeController extends GetxController {
     isLoading(false);
   }
 
+  // search weather
   void searchWeather(String city) {
     getWeather(city);
   }

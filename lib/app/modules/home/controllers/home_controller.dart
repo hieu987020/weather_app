@@ -15,7 +15,8 @@ import '../views/management_view.dart';
 class HomeController extends GetxController {
   // declare service
   late final IWeatherService service;
-
+  // bottom navigation bar current index
+  var currentIndex = 0.obs;
   // status of homeview
   var isLoading = false.obs;
 
@@ -118,7 +119,6 @@ class HomeController extends GetxController {
     });
   }
 
-  var currentIndex = 0.obs;
   onTapNavigator(int index) {
     if (index == 0) {
       currentIndex.value = index;

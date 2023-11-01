@@ -2,7 +2,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/utils/convert_data.dart';
 import '../controllers/home_controller.dart';
 import 'management_view.dart';
 
@@ -32,9 +31,26 @@ class HomeView extends GetView<HomeController> {
               MainWeather(),
               HourlyWeather(),
               SizedBox(height: 20),
-              DailyWeather()
+              // DailyWeather()
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex:
+              controller.currentIndex.value, // Set the initial selected index
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Today',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Forecast',
+            ),
+          ],
+          onTap: (index) => controller.onTapNavigator(index),
         ),
       ),
     );
@@ -57,42 +73,10 @@ class MainWeather extends GetView<HomeController> {
             : Column(
                 children: [
                   const SizedBox(height: 20),
-                  // menu
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      PopupMenuButton<String>(
-                        color: Colors.blue,
-                        icon: Image.asset(
-                          "assets/images/menu8.png",
-                          color: Colors.white,
-                          height: 25,
-                        ),
-                        offset: Offset(0, 50),
-                        itemBuilder: (BuildContext context) {
-                          return <PopupMenuEntry<String>>[
-                            PopupMenuItem<String>(
-                              value: 'Option 1',
-                              child: const Text(
-                                'Manage cities',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () {
-                                Get.to(() => const ManagementView());
-                              },
-                            ),
-                          ];
-                        },
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 50),
-
                   // city name text
                   Text(
-                    controller.location.value.name!,
+                    controller.name.value,
                     style: const TextStyle(
                       fontSize: 28,
                       color: Colors.white,
@@ -106,7 +90,7 @@ class MainWeather extends GetView<HomeController> {
                       Padding(
                         padding: const EdgeInsets.only(left: 25),
                         child: Text(
-                          convertTempCToString(controller.current.value.tempC!),
+                          controller.tempC.value,
                           style: const TextStyle(
                             fontSize: 96,
                             fontWeight: FontWeight.w300,
@@ -118,7 +102,7 @@ class MainWeather extends GetView<HomeController> {
                   ),
                   // weather condition text
                   Text(
-                    controller.current.value.condition!.text!,
+                    controller.createdAt.value,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
@@ -131,7 +115,7 @@ class MainWeather extends GetView<HomeController> {
   }
 }
 
-/// List Hourly Weather Widget
+// List Hourly Weather Widget
 class HourlyWeather extends GetView<HomeController> {
   const HourlyWeather();
 
@@ -140,7 +124,7 @@ class HourlyWeather extends GetView<HomeController> {
     return Obx(
       () => Container(
         width: 400,
-        height: 110,
+        height: 200,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10),
@@ -150,41 +134,50 @@ class HourlyWeather extends GetView<HomeController> {
             ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: controller.hour.length,
+                itemCount: controller.feeds.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     padding: const EdgeInsets.all(10.0),
+                    width: 140,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         // hour
-                        Text(
-                          controller.hour[index].time!.substring(11, 16),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
+                        MyText(
+                            text: controller.feeds[index].createdAt ?? "nan"),
+
                         const SizedBox(height: 15),
                         // weather icon image
-                        Image.network(
+                        Image.asset(
+                          'assets/images/weather.png',
                           height: 35,
-                          "https:${controller.hour[index].condition!.icon!}",
-                          errorBuilder: (context, exception, stackTrace) {
-                            return Image.asset(
-                              'assets/images/weather.png',
-                              height: 35,
-                            );
-                          },
                         ),
-                        const SizedBox(height: 2),
-                        // current temperature in celsius text
-                        Text(
-                          convertTempCToString(controller.hour[index].tempC!),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
+                        const SizedBox(height: 7),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(text: controller.field1.value),
+                            MyText(
+                                text: controller.feeds[index].field1 ?? "nun"),
+                          ],
+                        ),
+                        const SizedBox(height: 7),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(text: controller.field2.value),
+                            MyText(
+                                text: controller.feeds[index].field2 ?? "nun"),
+                          ],
+                        ),
+                        const SizedBox(height: 7),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(text: controller.field3.value),
+                            MyText(
+                                text: controller.feeds[index].field3 ?? "nun"),
+                          ],
                         ),
                       ],
                     ),
@@ -196,110 +189,17 @@ class HourlyWeather extends GetView<HomeController> {
   }
 }
 
-/// List Daily Weather Widget
-class DailyWeather extends GetView<HomeController> {
-  const DailyWeather();
-
+class MyText extends StatelessWidget {
+  const MyText({super.key, required this.text});
+  final String text;
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Container(
-        width: 400,
-        height: 170,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: const EdgeInsets.only(left: 10, right: 10),
-        child: (controller.isLoading.value)
-            ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.forecastday.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        // date
-                        Text(
-                          controller.forecastday[index].date!,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        // weather icon image
-                        Image.network(
-                          height: 35,
-                          "https:${controller.forecastday[index].day!.condition!.icon!}",
-                          errorBuilder: (context, exception, stackTrace) {
-                            return Image.asset(
-                              'assets/images/weather.png',
-                              height: 35,
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 5),
-                        // weather condition text
-                        Text(
-                          "${controller.forecastday[index].day!.condition!.text}",
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        // max temperature in celsius text
-                        Text(
-                          "Max ${convertTempCToString(controller.forecastday[index].day!.maxtempC!)}",
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        // min temperature in celsius text
-                        Text(
-                          "Min ${convertTempCToString(controller.forecastday[index].day!.mintempC!)}",
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        // const SizedBox(height: 10),
-                        // Text(
-                        //   "Wind ${controller.forecastday[index].day!.maxwindKph} km/h",
-                        //   style: const TextStyle(
-                        //     fontSize: 14,
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // const SizedBox(height: 10),
-                        // // sunrise time
-                        // Text(
-                        //   "Sunrise: ${controller.forecastday[index].astro!.sunrise!}",
-                        //   style: const TextStyle(
-                        //     fontSize: 14,
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                        // const SizedBox(height: 10),
-                        // // sunset time
-                        // Text(
-                        //   "Sunset: ${controller.forecastday[index].astro!.sunset!}",
-                        //   style: const TextStyle(
-                        //     fontSize: 14,
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 12,
+        color: Colors.white,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

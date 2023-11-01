@@ -43,4 +43,5 @@ Future<void> initServices() async {
     () => Future(() => WeatherService()),
     tag: ServiceEnum.WEATHER,
   );
+
 }

@@ -3,222 +3,113 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
+import 'home_view.dart';
 
-// Management View
-class ManagementView extends GetView<HomeController> {
-  const ManagementView({Key? key}) : super(key: key);
+/// Home Weather View
+class ForecastView extends GetView<HomeController> {
+  const ForecastView();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.blueGrey,
-                Colors.blueAccent,
-              ],
-            ),
+    return Scaffold(
+      body: Container(
+        height: 1000,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.blueGrey,
+              Colors.blueAccent,
+            ],
           ),
+        ),
+        child: const SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 30),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  //back icon button
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  // search icon button
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      child: SizedBox(
-                        height: 60,
-                        child: TextField(
-                          controller: controller.searchController,
-                          onTapOutside: (event) =>
-                              FocusManager.instance.primaryFocus?.unfocus(),
-                          decoration: InputDecoration(
-                            hintText: 'Search',
-                            hintStyle: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
-                            ),
-                            prefixIconColor: Colors.white.withOpacity(0.6),
-                            prefixIcon: IconButton(
-                              icon: const Icon(Icons.search),
-                              onPressed: () {
-                                controller.searchWeather(
-                                    controller.searchController.text);
-                              },
-                            ),
-                            suffixIconColor: Colors.white.withOpacity(0.6),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                controller.searchController.clear();
-                              },
-                            ),
-                            filled: true,
-                            fillColor: Colors.white.withOpacity(0.2),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide.none),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          onSubmitted: (value) {
-                            controller.searchWeather(value);
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // suggested cities
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "SUGGESTED CITIES",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Wrap(
-                        children: listView(),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                ),
-              ),
+              MainWeatherSecond(),
+              HourlyWeather(),
+              SizedBox(height: 20),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex:
+              controller.currentIndex.value, // Set the initial selected index
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Today',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Forecast',
+            ),
+          ],
+          onTap: (index) => controller.onTapNavigator(index),
+        ),
+      ),
     );
-  }
-
-  // generate list suggested cities widget
-  List<Widget> listView() {
-    var list = <Widget>[];
-    var suggestion = [
-      'Hanoi',
-      'Ho Chi Minh City',
-      'Da Nang',
-      'Hai Phong',
-      'Can Tho',
-      'Bien Hoa',
-      'Hue',
-      'Nha Trang',
-      'Buon Ma Thuot',
-      'Vung Tau',
-      'Hai Duong',
-      'Phan Thiet',
-      'Cam Pha',
-      'Qui Nhon',
-      'Rach Gia',
-      'Long Xuyen',
-      'Tan An',
-      'Yen Bai',
-      'Tuy Hoa',
-      'Dong Hoi',
-      'Vinh Yen',
-      'My Tho',
-      'Ben Tre',
-      'Tam Ky',
-      'Soc Trang',
-      'Pleiku',
-      'Yen Vinh',
-      'Vi Thanh',
-      'Sa Dec',
-      'Lao Cai',
-      'Son Tay',
-      'Nam Dinh',
-      'Bac Giang',
-      'Thai Nguyen',
-      'Phu Ly',
-      'Ca Mau',
-      'Quang Ngai',
-      'Vinh',
-      'Dong Ha',
-      'Hoa Binh',
-      'Thanh Hoa',
-      'Bac Ninh',
-      'Alabama',
-      'Alaska',
-      'Arizona',
-      'Arkansas',
-      'California',
-      'Colorado',
-      'Connecticut',
-      'Delaware',
-      'Maryland',
-      'Massachusetts',
-      'Michigan',
-      'Minnesota',
-      'Mississippi',
-      'Missouri',
-      'Montana',
-      'Nebraska',
-      'Nevada',
-      'New Hampshire'
-    ];
-    for (var element in suggestion) {
-      list.add(SuggestedCities(city: element));
-    }
-    return list;
   }
 }
 
-// Suggested Cities Widget
-class SuggestedCities extends GetView<HomeController> {
-  const SuggestedCities({required this.city});
-  final String city;
+/// Main Weather Widget
+class MainWeatherSecond extends GetView<HomeController> {
+  const MainWeatherSecond({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          controller.searchWeather(city);
-          Get.back();
-        },
-        child: Text(
-          city.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.white,
-          ),
-        ),
+    return Obx(
+      () => SizedBox(
+        height: 340,
+        child: (controller.isLoading.value)
+            ? Center(
+                child: const CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  const SizedBox(height: 20),
+                  // menu
+                  const SizedBox(height: 50),
+                  // city name text
+                  Text(
+                    controller.name.value,
+                    style: const TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  // temperature in celsius text
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25),
+                        child: Text(
+                          controller.tempC.value,
+                          style: const TextStyle(
+                            fontSize: 96,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // weather condition text
+                  Text(
+                    controller.createdAt.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

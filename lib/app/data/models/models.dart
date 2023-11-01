@@ -7,3 +7,4 @@ export 'forecastday_model.dart';
 export 'hour_model.dart';
 export 'location_model.dart';
 export 'weather_model.dart';
+export 'chien_model.dart';

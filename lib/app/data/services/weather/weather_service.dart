@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:weather_app/app/data/models/chien_model.dart';
 import 'package:weather_app/app/data/models/weather_model.dart';
 import '../../enums/provider_enum.dart';
 import '../../providers/weather/weather_provider_interface.dart';
@@ -9,6 +10,13 @@ class WeatherService extends GetxService implements IWeatherService {
   Future<Weather> getWeather(String query, int days) {
     var provider = Get.find<IWeatherProvider>(tag: ProviderEnum.WEATHER);
     var result = provider.getWeather(query, days);
+    return result;
+  }
+
+  @override
+  Future<ChienWeather> getChienWeather(int results) {
+    var provider = Get.find<IWeatherProvider>(tag: ProviderEnum.WEATHER);
+    var result = provider.getChienWeather(results);
     return result;
   }
 }

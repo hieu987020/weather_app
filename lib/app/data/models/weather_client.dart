@@ -1,36 +1,30 @@
+//https://api.thingspeak.com/channels/2279522/feeds.json?results=2
+
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
-import 'current_model.dart';
-import 'forecast_model.dart';
-import 'location_model.dart';
 
-part 'weather_model.g.dart';
+import 'models.dart';
+
+part 'weather_client.g.dart';
 
 @RestApi()
 abstract class WeatherObjectRestClient {
   factory WeatherObjectRestClient(Dio dio, {String baseUrl}) =
       _WeatherObjectRestClient;
 
-  @GET("/forecast.json")
-  Future<Weather> getWeather(
-    @Query('key') String key,
-    @Query('q') String query,
-    @Query('days') int days,
+  @GET('/feeds.json')
+  Future<Weather> getWeathers(
+    @Query('results') int results,
   );
 }
 
 @JsonSerializable()
 class Weather {
-  Location? location;
-  Current? current;
-  Forecast? forecast;
+  WeatherChannel? channel;
+  List<WeatherFeed>? feeds;
 
-  Weather({
-    this.location,
-    this.current,
-    this.forecast,
-  });
+  Weather({this.channel, this.feeds});
 
   factory Weather.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);

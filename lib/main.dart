@@ -3,8 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'app/data/enums/enums.dart';
 import 'app/data/providers/base_provider.dart';
-import 'app/data/providers/weather/weather_provider.dart';
-import 'app/data/providers/weather/weather_provider_interface.dart';
+import 'app/data/services/forecast/forecast_service.dart';
+import 'app/data/services/forecast/forecast_service_interface.dart';
 import 'app/data/services/weather/weather_service.dart';
 import 'app/data/services/weather/weather_service_interface.dart';
 import 'app/routes/app_pages.dart';
@@ -30,18 +30,18 @@ Future<void> main() async {
 Future<void> initServices() async {
   // get api url and shared key from environment
   BaseProvider().init(
-    url: dotenv.env["URL"],
+    weatherUrl: dotenv.env["URL_WEATHER"],
+    forecastUrl: dotenv.env["URL_FORECAST"],
     key: dotenv.env["API_KEY"],
   );
-  // put provider
-  await Get.putAsync<IWeatherProvider>(
-    () => Future(() => WeatherProvider()),
-    tag: ProviderEnum.WEATHER,
-  );
+
   // put service
   await Get.putAsync<IWeatherService>(
     () => Future(() => WeatherService()),
     tag: ServiceEnum.WEATHER,
   );
-
+  await Get.putAsync<IForecastService>(
+    () => Future(() => ForecastService()),
+    tag: ServiceEnum.FORECAST,
+  );
 }

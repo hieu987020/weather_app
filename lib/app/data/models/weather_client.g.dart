@@ -1,22 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chien_model.dart';
+part of 'weather_client.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChienWeather _$ChienWeatherFromJson(Map<String, dynamic> json) => ChienWeather(
+Weather _$WeatherFromJson(Map<String, dynamic> json) => Weather(
       channel: json['channel'] == null
           ? null
-          : Channel.fromJson(json['channel'] as Map<String, dynamic>),
+          : WeatherChannel.fromJson(json['channel'] as Map<String, dynamic>),
       feeds: (json['feeds'] as List<dynamic>?)
-          ?.map((e) => Feeds.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => WeatherFeed.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ChienWeatherToJson(ChienWeather instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WeatherToJson(Weather instance) => <String, dynamic>{
       'channel': instance.channel,
       'feeds': instance.feeds,
     };
@@ -27,8 +26,8 @@ Map<String, dynamic> _$ChienWeatherToJson(ChienWeather instance) =>
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ChienWeatherObjectRestClient implements ChienWeatherObjectRestClient {
-  _ChienWeatherObjectRestClient(
+class _WeatherObjectRestClient implements WeatherObjectRestClient {
+  _WeatherObjectRestClient(
     this._dio, {
     this.baseUrl,
   });
@@ -38,13 +37,13 @@ class _ChienWeatherObjectRestClient implements ChienWeatherObjectRestClient {
   String? baseUrl;
 
   @override
-  Future<ChienWeather> getWeather(int results) async {
+  Future<Weather> getWeathers(int results) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'results': results};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ChienWeather>(Options(
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Weather>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -60,7 +59,7 @@ class _ChienWeatherObjectRestClient implements ChienWeatherObjectRestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ChienWeather.fromJson(_result.data!);
+    final value = Weather.fromJson(_result.data!);
     return value;
   }
 

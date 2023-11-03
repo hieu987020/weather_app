@@ -2,4 +2,5 @@
 
 class ServiceEnum {
   static const String WEATHER = "Weather Service";
+  static const String FORECAST = "Forecast Service";
 }

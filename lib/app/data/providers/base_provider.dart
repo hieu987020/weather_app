@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 
 class BaseProvider {
   static final Dio dio = Dio();
-  static String? apiUrl;
+  static String? weatherApiUrl;
+  static String? forecastApiUrl;
   static String? apiKey;
 
-  init({String? url, String? key}) {
+  init({String? weatherUrl, String? forecastUrl, String? key}) {
     // get api url , shared key from environment file
-    apiUrl = url;
+    weatherApiUrl = weatherUrl;
+    forecastApiUrl = forecastUrl;
     apiKey = key;
 
     // dio.interceptors.clear();

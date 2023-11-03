@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 // ignore_for_file: unnecessary_overrides
 
 import 'dart:developer';
@@ -83,7 +84,7 @@ class WeatherController extends GetxController {
           feedsForView.add(
             WeatherFeed(
               entryId: element.entryId,
-              createdAt: utcToLocal(element.createdAt!),
+              createdAt: toLocalDate(element.createdAt!),
               field1: convertTempCToString(element.field1!),
               field2: convertHumidityToString(element.field2!),
               field3: convertPressureToString(element.field3!),
@@ -112,4 +113,18 @@ class WeatherController extends GetxController {
       isLoading(false);
     });
   }
+}
+
+String toLocalDate(String createdAt) {
+  //"yyyy-MM-dd'T'HH:mm:ss'Z'"
+  var newValue = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(createdAt);
+  newValue = DateTime(
+    newValue.year,
+    newValue.month,
+    newValue.day,
+    newValue.hour + 7,
+    newValue.minute,
+  );
+  String result = DateFormat("yyyy-MM-dd HH:mm").format(newValue);
+  return result;
 }

@@ -83,6 +83,9 @@ class ForecastController extends GetxController {
         field2.value = forecast.channel!.field2 ?? "nan";
         field3.value = forecast.channel!.field3 ?? "nan";
         field4.value = forecast.channel!.field4 ?? "nan";
+        // sort list by date
+        feedsForView = sortList(feedsForView);
+        //
         feeds.value = feedsForView;
         // find closet date to now
         var closetsDateTimeToNow = findClosetDatetime(feedsForView);
@@ -99,6 +102,28 @@ class ForecastController extends GetxController {
       isLoading(false);
     });
   }
+}
+
+// sort list by date
+sortList(List<ForecastFeed>? feeds) {
+  if (feeds == null) return;
+  // log("before sort");
+  // for (var element in feeds) {
+  //   log(element.field4!);
+  // }
+
+  // sort
+  feeds.sort((a, b) {
+    return a.field4!.compareTo(b.field4!);
+  });
+
+  // remove duplicate date
+  feeds.toSet().toList();
+  // log("after sort");
+  // for (var element in feeds) {
+  //   log(element.field4!);
+  // }
+  return feeds;
 }
 
 parseForecastFeed(List<ForecastFeed>? feeds) {

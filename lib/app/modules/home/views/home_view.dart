@@ -25,6 +25,10 @@ class HomeView extends GetView<HomeController> {
                 icon: Icon(Icons.search),
                 label: 'Forecast',
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                label: 'Account',
+              ),
             ],
             onTap: (index) => controller.onTapNavigator(index),
           ),
@@ -46,6 +50,9 @@ Widget _getView(int index) {
       break;
     case 1:
       view = AppPages.page[Routes.FORECAST] as Widget;
+      break;
+    case 2:
+      view = AppPages.page[Routes.ACCOUNT] as Widget;
       break;
     default:
       view = AppPages.page[Routes.HOME] as Widget;

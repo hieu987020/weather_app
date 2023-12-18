@@ -44,4 +44,5 @@ Future<void> initServices() async {
     () => Future(() => ForecastService()),
     tag: ServiceEnum.FORECAST,
   );
+  
 }

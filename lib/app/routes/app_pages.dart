@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../modules/account/bindings/account_binding.dart';
+import '../modules/account/views/account_view.dart';
 import '../modules/forecast/bindings/forecast_binding.dart';
 import '../modules/forecast/views/forecast_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -21,6 +23,7 @@ class AppPages {
     _Paths.HOME: const HomeView(),
     _Paths.WEATHER: const WeatherView(),
     _Paths.FORECAST: const ForecastView(),
+    _Paths.ACCOUNT: const AccountView(),
   };
   static final routes = [
     GetPage(
@@ -30,6 +33,7 @@ class AppPages {
         HomeBinding(),
         WeatherBinding(),
         ForecastBinding(),
+        AccountBinding(),
       ],
     ),
     GetPage(
@@ -41,6 +45,11 @@ class AppPages {
       name: _Paths.FORECAST,
       page: () => const ForecastView(),
       binding: ForecastBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACCOUNT,
+      page: () => const AccountView(),
+      binding: AccountBinding(),
     ),
   ];
 }

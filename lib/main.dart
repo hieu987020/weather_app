@@ -48,7 +48,7 @@ Future<void> initServices() async {
 
   // default account
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.clear();
+  // prefs.clear();
   prefs.setString('admin', 'admin');
   prefs.setString('admin1', 'admin1');
   prefs.setString('admin2', 'admin2');

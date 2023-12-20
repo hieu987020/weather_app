@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'app/data/enums/enums.dart';
 import 'app/data/providers/base_provider.dart';
 import 'app/data/services/forecast/forecast_service.dart';
@@ -44,5 +45,14 @@ Future<void> initServices() async {
     () => Future(() => ForecastService()),
     tag: ServiceEnum.FORECAST,
   );
-  
+
+  // default account
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  prefs.setString('admin', 'admin');
+  prefs.setString('admin1', 'admin1');
+  prefs.setString('admin2', 'admin2');
+  prefs.getKeys().forEach((element) {
+    print(element);
+  });
 }
